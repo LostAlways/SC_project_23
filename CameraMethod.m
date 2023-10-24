@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> 53cb872ca5da2370244de65350e1bbcebe7185c3
 %% Creating a loop to gather all the images
 
 dobot_pose1 = [-0.3008 -0.0024 0.1663 0]; % Remember that the Dobot has 4 joints by default. 
@@ -136,6 +139,7 @@ end
     % 
     % % Publish the image message to the bag
     % send(imagePub, imgMsg);
+<<<<<<< HEAD
 
 
 
@@ -145,3 +149,5 @@ end
 
 
 
+=======
+>>>>>>> 53cb872ca5da2370244de65350e1bbcebe7185c3
