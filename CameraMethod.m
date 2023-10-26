@@ -64,7 +64,7 @@ for i = 1:num_images
     pause(1);
 
 
-    % Obtain the end effector pose
+    % Obtain the end effector pose outputs 4x4 transform
     currentEndEffectorPoseMsg = endEffectorPoseSubscriber.LatestMessage;
     currentEndEffectorPosition = [currentEndEffectorPoseMsg.Pose.Position.X;
                                   currentEndEffectorPoseMsg.Pose.Position.Y;
@@ -91,7 +91,6 @@ for i = 1:num_images
     % Pause to allow time for capturing and processing
     pause(1); % Adjust the pause duration as needed
 end
-close(bag);
 
 
 
