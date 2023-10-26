@@ -31,15 +31,17 @@ endEffectorPoseSubscriber = rossubscriber('/dobot_magician/end_effector_poses');
 
 imagePub = rospublisher('/camera/color/image_raw', 'sensor_msgs/Image');
 
+depthSub = rossubscriber('/camera/depth/image_rect_raw/compressed');
+pause(1); % Wait for a second to make sure you receive a message
+
+depthImagePub = rospublisher('/camera/depth/image_rect_raw/compressed');
+
 % Initialize an array to store the captured images
 num_images = length(dobot_poses);
 captured_images = cell(1, num_images);   % Creates a cell array with one row and num_images of columns
 
 % Initialize a cell array to store the end effector transformation matrices
 T_EE = cell(1, num_images);
-
-output_directory = 'home/david/Desktop/DobotImg';
-
 
 
 
@@ -59,6 +61,7 @@ for i = 1:num_images
 
     % Store the captured image in the corresponding variable
     captured_images{i} = image;
+    pause(1);
 
 
     % Obtain the end effector pose
@@ -88,7 +91,7 @@ for i = 1:num_images
     % Pause to allow time for capturing and processing
     pause(1); % Adjust the pause duration as needed
 end
-
+close(bag);
 
 
 
