@@ -1,9 +1,10 @@
 
 %% Creating a loop to gather all the images
+% All poses are to be sent to Dobot in Loop Below
 
 dobot_pose1 = [-0.3008 -0.0024 0.1663 0]; % Remember that the Dobot has 4 joints by default. 
 dobot_pose2 = [-0.1982 0.0011 0.1692 0];
-dobot_pose3 = [-0.333 0.0012 0.1284 0];
+dobot_pose3 = [-0.2273 -0.0631 0.3621 0];
 dobot_pose4 = [0.0670 -0.0135 0.1283 0];
 dobot_pose5 = [0.0383 0.0103 0.3679 0];
 dobot_pose6 = [0.0388 0.1255 0.4170 0];
@@ -11,39 +12,43 @@ dobot_pose7 = [-0.1635 0.1210 0.4418 0];
 %dobot_pose8 = [0.2014 0.1245 0.5182 0];
 dobot_pose8 = [-0.0859 0.1221 0.7925 0];
 %dobot_pose9 = [0.1894 0.1351 0.2520 0];
-dobot_pose9 = [0.1894 0.1351 0.2520 0];
+dobot_pose9 = [-0.2772 0.0475 0.4283 0];
 dobot_pose10 = [-0.0688 0.1119 0.3018 0];
 
-% bag = rosbagwriter('Dobot_pose_images.bag'); %Create a rosbag file
 
 % Define an array of dobot poses
 dobot_poses = [dobot_pose1; dobot_pose2; dobot_pose3; dobot_pose4;
-               dobot_pose5; dobot_pose6; dobot_pose7; dobot_pose8; dobot_pose9; dobot_pose10];
+               dobot_pose5; dobot_pose6; dobot_pose7; dobot_pose8; dobot_pose9; dobot_pose10]; %Increase Poses if needed and add to array
+
+
+%% Setup Ros Subscribes and Publishers, to send and receive data from Dobot
+
+% Create a ROS subscriber for the camera image
+rgbSub = rossubscriber('/camera/color/image_raw');
 
 % Create a ROS publisher for target joint states
 [targetJointTrajPub, targetJointTrajMsg] = rospublisher('/dobot_magician/target_joint_states');
 
-
-% Create a ROS subscriber for the camera image
-rgbSub = rossubscriber('/camera/color/image_raw');
 % Create a ROS subscriber for end effector poses
 endEffectorPoseSubscriber = rossubscriber('/dobot_magician/end_effector_poses');
 
-imagePub = rospublisher('/camera/color/image_raw', 'sensor_msgs/Image');
-
-% Initialize an array to store the captured images
+%% Initialize an array to store the captured images
 num_images = length(dobot_poses);
 captured_images = cell(1, num_images);   % Creates a cell array with one row and num_images of columns
 
 % Initialize a cell array to store the end effector transformation matrices
 T_EE = cell(1, num_images);
 
-output_directory = 'home/david/Desktop/DobotImg';
 
 
+%% Create a loop that will:
+% move through each dobot posed initialised sequentially
+% Take an image at each Dobot Pose
+% Store the image into the cell array captured_images
+% Obtain the EndEffector Pose and convert into a 4x4 matrix describing pose
+% Store Pose in Cell array T_EE
+% Show image, and loop all the way through
 
-
-% Loop through the dobot poses      
 for i = 1:num_images
     % Set the trajectory point positions
     trajectoryPoint = rosmessage('trajectory_msgs/JointTrajectoryPoint');
@@ -59,9 +64,10 @@ for i = 1:num_images
 
     % Store the captured image in the corresponding variable
     captured_images{i} = image;
+    pause(1);
 
 
-    % Obtain the end effector pose
+    % Obtain the end effector pose outputs 4x4 transform
     currentEndEffectorPoseMsg = endEffectorPoseSubscriber.LatestMessage;
     currentEndEffectorPosition = [currentEndEffectorPoseMsg.Pose.Position.X;
                                   currentEndEffectorPoseMsg.Pose.Position.Y;
@@ -89,54 +95,4 @@ for i = 1:num_images
     pause(1); % Adjust the pause duration as needed
 end
 
-
-
-
-
-
-%% just notes
-% You now have captured_images{1}, captured_images{2}, ..., captured_images{9} containing the captured images.
-
-% % Specify the directory where you want to save the images
-% output_directory = '/path/to/your/directory/';
-% 
-% % Loop through the dobot poses
-% for i = 1:num_images
-%    % Specify the directory where you want to save the images
-% output_directory = '/path/to/your/directory/';
-% 
-% % Loop through the dobot poses
-% for i = 1:num_images
-%     % ... (previous code)
-% 
-%     % Save the captured image to the directory
-%     image_filename = fullfile(output_directory, ['image', num2str(i), '.png']);
-%     imwrite(image, image_filename);
-% 
-%     % ... (rest of the loop)
-% end % ... (previous code)
-% 
-%     % Save the captured image to the directory
-%     image_filename = fullfile(output_directory, ['image', num2str(i), '.png']);
-%     imwrite(image, image_filename);
-% 
-%     % ... (rest of the loop)
-% end
-
-
-    
-    %image_filename = fullfile(output_directory, ['image', num2str(i), '.jpg']);
-    %imwrite(image, image_filename);
-    
-    % Convert the captured image to a ROS message
-
-    % imgMsg = rosmessage('sensor_msgs/Image');
-    % 
-    % imgMsg.Data = reshape(image, 1, []); % Convert the image to a vector
-    % imgMsg.Width = size(image, 2); % Set the width of the image
-    % imgMsg.Height = size(image, 1); % Set the height of the image
-    % imgMsg.Encoding = 'rgb8'; % Set the image encoding (adjust as needed)
-    % 
-    % % Publish the image message to the bag
-    % send(imagePub, imgMsg);
 
