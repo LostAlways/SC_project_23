@@ -1,6 +1,5 @@
 %% Using a derivatio of Zachary Taylors Method to complete the calibration. Uses CalCamEIH. to complete and
- % and outputs of images and Transforms attained from
- % CameraCheckerboardCalibration.m script.
+ % and outputs of images and Transforms attained from C
 
 
 %% Using the CameraCheckerboardCalibration.m Method to attain the transforms and images
