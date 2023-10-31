@@ -7,7 +7,9 @@ Moving the dobot:
 Calculating the Intrinsic Parameters
     - 10 pictures taken around the Checkerboard using the Realsense RGBD camera using the code file:
     - Use week 2 content to work out the intrinsic parameters from the RGBD camera:
-    - Code used to work out the transform from the base of the Dobot to the camera and from the end effector to the checkerboard
+    - Code used to work out the transform from the base of the Dobot to the camera and from the end effector to the checkerboa
+
+
 
 Working out the Checkerboard coordinates in the Global world coordinate using intrinsic parameters
     - 
