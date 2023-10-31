@@ -9,15 +9,13 @@ Calculating the Intrinsic Parameters
     - Use week 2 content to work out the intrinsic parameters from the RGBD camera:
     - Code used to work out the transform from the base of the Dobot to the camera and from the end effector to the checkerboard
 
-Working out the Checkerboard coordinates in the Global world coordinate using intrinsic parameters
-    - 
-    - The z value
-
 
 Eye-in-hand calibration
-    Use of code to 
-    - Do mathematical transforming to work out the transform from the end effector to the camera
-    - Use the ax = bx formula. Use Dominik's function to work it out in matlab.
+    Zachery Taylor's Matlab toolbox was used in the calibration process ("Camera to Robotic Arm Calibration" toolbox ). 10 pictures were taken
+of the checkerbaord in different poses and the arm base to the robotic end effector position was recorded. External calibration code of "CalCamArm.m" was
+used to get the end effector to the checkerboard transform and the robot base to the camera transform.  The folder "RequiredFuncCalCam" has the necessary 
+coding files required to run the CalCamArm.m code.
+
 
 
 Visual Servoing
@@ -25,5 +23,9 @@ Visual Servoing
     - That vectors tells you the transform from desired to current pose of the checkerboard. The vector is implemented
         into the transform of the robot's end effector to move follow the checkerboard accordingly
     - The visual servoing code is placed in a while loop in order to constantly read the image from the sensors anc 
-       control the dobot according to it. The code file that uses this methodology to perform visual servoing is
-        VisServo2.m
+       control the dobot according to it. The code file that uses this methodology to perform visual servoing is "DemoVisServo.m"
+    - The file gets the the image from the camera and constantly works out the camera velocity and moves the joints according to the camera velocity
+        vector
+
+
+
