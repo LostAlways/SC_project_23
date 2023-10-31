@@ -8,13 +8,17 @@ Calculating the Intrinsic Parameters
     - 10 pictures taken around the Checkerboard using the Realsense RGBD camera using the code file:
     - Use week 2 content to work out the intrinsic parameters from the RGBD camera:
     - Code used to work out the transform from the base of the Dobot to the camera and from the end effector to the checkerboard
+    - Matlab Calibration Toolbox used to aid in perfoming this task.
 
 
 Eye-in-hand calibration
-    Zachery Taylor's Matlab toolbox was used in the calibration process ("Camera to Robotic Arm Calibration" toolbox ). 10 pictures were taken
-of the checkerbaord in different poses and the arm base to the robotic end effector position was recorded. External calibration code of "CalCamArm.m" was
+    Zachery Taylor's Matlab code was used in the calibration process along with ("Camera to Robotic Arm Calibration" toolbox ). 10 pictures were taken
+of the checkerbaord in different poses and the arm base to the robotic end effector position was recorded. External calibration code of "CalCamArmEIH.m" was
 used to get the end effector to the checkerboard transform and the robot base to the camera transform.  The folder "RequiredFuncCalCam" has the necessary 
-files required to perform the Ca
+files required to perform Zachary Taylor Calibration.
+
+DemoCalib.m which requires the CameraMethod.m, is used to move the Dobot arm to various poses and capture images of checkerboard and then stores the 4x4 matrix describing the
+pose at each location.
 
 
 
